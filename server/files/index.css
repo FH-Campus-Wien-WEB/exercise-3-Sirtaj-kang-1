@@ -5,21 +5,13 @@ h1 {
   margin: 8px 0px;
 }
 
+h2 {
+  margin: 0;
+}
+
 /* Constrain the page to the viewport */
 html, body {
   height: 100vh;
-}
-
-/* Center the nav's header and list */
-nav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* navigation buttons have full width */
-nav button {
-  width: 100%;
 }
 
 /* Remove unnecessary space and bullets from the lists */
@@ -29,26 +21,88 @@ ul {
   list-style-type: none;
 }
 
-/* Task 2.1. Lay out the childs of the 'body' using Grid Template Areas. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "h"
+    "n"
+    "m"
+    "f";
+}
 
+header {
+  grid-area: h;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 16px;
+  background-image: linear-gradient(rgba(42, 22, 8, 0.55), rgba(42, 22, 8, 0.55)), url("./images/header-background.jpg");
+  background-size: cover;
+  background-position: center;
+}
 
-/* Task 3.1. Make the header element a flex container and center its children
-   vertically and horizontally.
- */
+nav {
+  grid-area: n;
+  padding: 16px;
+}
 
+main {
+  grid-area: m;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+  gap: 16px;
+}
 
-/* Task 3.2. Make the list items of the unordered list in the nav element a flex container, 
-   use column direction and center the child items
- */
+footer {
+  grid-area: f;
+  padding: 12px 16px;
+}
 
-/* Task 3.3. Make the main element a Flexbox container */
+@media (min-width: 900px) {
+  body {
+    grid-template-columns: 240px minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "h h"
+      "n m"
+      "f f";
+  }
+}
 
+nav ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
 
-/* Task 3.4. Make the footer's ul a Flexbox container */
+nav button {
+  width: min(100%, 280px);
+}
+
+footer ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
 
 
 /* From here on styling from exercise 1 */
 img {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 12px;
   border-radius: 12px;
 }
 
@@ -56,15 +110,15 @@ article {
   background-color: lightgray;
   border-radius: 16px;
   padding: 16px;
-  width: 384px;
-  margin: 8px;
+  width: min(100%, 384px);
+  margin: 0;
 }
 
 a {
   color: beige;
 }
 
-span {
+article span {
   margin-right: 4px;
 }
 
@@ -73,5 +127,11 @@ span {
   border: solid black 1px;
   border-radius: 6px;
   background-color: darkgray;
+  font-weight: bold;
+}
+
+button.active {
+  background-color: #ffcc00;
+  color: #23160b;
   font-weight: bold;
 }

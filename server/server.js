@@ -11,18 +11,23 @@ app.use(bodyParser.json());
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, 'files')));
 
-/* Task 1.2: Add a GET /genres endpoint:
-   This endpoint returns a sorted array of all the genres of the movies
-   that are currently in the movie model.
-*/
+app.get('/genres', function (req, res) {
+  const genres = [...new Set(
+    Object.values(movieModel).flatMap((movie) => movie.Genres)
+  )].sort((left, right) => left.localeCompare(right));
 
-/* Task 1.4: Extend the GET /movies endpoint:
-   When a query parameter for a specific genre is given, 
-   return only movies that have the given genre
- */
+  res.json(genres);
+})
+
 app.get('/movies', function (req, res) {
-  let movies = Object.values(movieModel)
-  res.send(movies);
+  const genre = req.query.genre;
+  let movies = Object.values(movieModel);
+
+  if (genre) {
+    movies = movies.filter((movie) => movie.Genres.includes(genre));
+  }
+
+  res.json(movies);
 })
 
 // Configure a 'get' endpoint for a specific movie

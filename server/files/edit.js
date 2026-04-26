@@ -57,7 +57,7 @@ function putMovie() {
     if (xhr.status == 200 || xhr.status === 204) {
       location.href = 'index.html'
     } else {
-      alert("Saving of movie data failed. Status code was " + response.status)
+      alert("Saving of movie data failed. Status was " + xhr.status + " - " + xhr.statusText)
     }
   }
   
@@ -71,14 +71,18 @@ function putMovie() {
 /** Loading and setting the movie data for the movie with the passed imdbID */
 const imdbID = new URLSearchParams(window.location.search).get("imdbID");
 
-const xhr = new XMLHttpRequest();
-xhr.open("GET", "/movies/" + imdbID);
-xhr.onload = function() {
-  if (xhr.status === 200) {
-    setMovie(JSON.parse(xhr.responseText));
-  } else {
-    alert("Loading of movie data failed. Status was " + xhr.status + " - " + xhr.statusText);
-  } 
-}
+if (!imdbID) {
+  alert("Loading of movie data failed. No imdbID was provided.");
+} else {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "/movies/" + imdbID);
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      setMovie(JSON.parse(xhr.responseText));
+    } else {
+      alert("Loading of movie data failed. Status was " + xhr.status + " - " + xhr.statusText);
+    } 
+  }
 
-xhr.send()
+  xhr.send()
+}
